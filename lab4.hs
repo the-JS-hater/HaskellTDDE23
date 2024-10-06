@@ -65,3 +65,43 @@ stringOr _ _      = "false"
 stringNot :: String -> String
 stringNot "true" = "false"
 stringNot "false" = "true"
+
+
+-- test Functions for B part =================
+ 
+falseExpression = List 
+  [ Elem "NOT", 
+    List 
+      [ Elem "NOT", 
+        List 
+          [ Elem "NOT", 
+            List 
+              [ Elem "cat_asleep", 
+                Elem "OR", 
+                List 
+                  [ Elem "NOT", Elem "cat_asleep" ]
+              ]
+          ]
+      ]
+  ]
+
+falseInterpretation = HashMap.fromList [("cat_asleep", "false")]
+
+testFalse :: IO()
+testFalse = putStrLn (interpret falseExpression falseInterpretation)
+
+trueExpression = List 
+  [ Elem "cat_asleep", 
+    Elem "OR", 
+    List 
+      [ Elem "NOT", Elem "cat_gone" ]
+  ]
+
+trueInterpretation = HashMap.fromList 
+  [ ("door_open", "false")
+  , ("cat_gone", "true")
+  , ("cat_asleep", "true")
+  ]
+
+testTrue :: IO()
+testTrue = putStrLn (interpret trueExpression trueInterpretation)
